@@ -69,4 +69,30 @@ impl WriteBmp for Framebuffer {
     fn render_buffer(&self, file_path: &str) -> std::io::Result<()> {
         write_bmp_file(file_path, &self.buffer, self.width, self.height)
     }
+
+
+    
+}
+
+pub trait WritePng {
+    fn render_png(&self, file_path: &str) -> Result<(), Box<dyn std::error::Error>>;
+}
+
+impl WritePng for Framebuffer {
+    fn render_png(&self, file_path: &str) -> Result<(), Box<dyn std::error::Error>> {
+        let mut img = image::RgbImage::new(self.width as u32, self.height as u32);
+
+        for y in 0..self.height {
+            for x in 0..self.width {
+                let pixel = self.buffer[y * self.width + x];
+                let r = (pixel >> 16) as u8;
+                let g = (pixel >> 8) as u8;
+                let b = pixel as u8;
+                img.put_pixel(x as u32, y as u32, image::Rgb([r, g, b]));
+            }
+        }
+
+        img.save(file_path)?;
+        Ok(())
+    }
 }
