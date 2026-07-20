@@ -133,4 +133,5 @@ fn fill_edges(fb: &mut Framebuffer, edges: &[((i32, i32), (i32, i32))], color: u
             i += 2;
         }
     }
+    
 }
