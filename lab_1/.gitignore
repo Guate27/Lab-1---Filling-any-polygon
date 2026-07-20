@@ -1,2 +1,4 @@
-/lab_1/target
+/target
 Cargo.lock
+*.bmp
+*.png
